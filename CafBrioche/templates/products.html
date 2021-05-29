@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block contenido %}
+
+<div id="content-wrap">
+  <center>
+  <h1><b>Lista de productos registrados</b></h1>
+  <table class="table table-hover"  class="tablas">
+      <thead>
+        <tr> 
+          <td width="2">Id</td> 
+          <td width="2">Codigo</td> 
+          <td >Nombre</td>
+          <td >Precio de venta($COP)</td> 
+          <td width="2">Cantidad</td>
+          <td width="2">Imagen</td>
+
+        </tr>
+      </thead> 
+      {% for pro in productos %}
+      <tbody>
+        <tr>
+          <td width="2">{% print(pro.id) %}</td> 
+          <td width="2">{% print(pro.idProd) %}</td> 
+          <td width="2">{% print(pro.nombre) %}</td>  
+          <td width="2">{% print(pro.precio) %}</td>
+          <!--<td width="2">{% print(pro[4]) %}</td>-->
+          <td width="2">{% print(pro.cantidad) %}</td>
+          <td><img alt="{{ pro.nombre }}" src="{{ url_for('obtener_img', prodid=pro.id)}}" /></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</center>
+{%endblock%}
+

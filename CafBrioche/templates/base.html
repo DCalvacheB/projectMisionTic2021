@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Estilo.css')}}">
+
+
+  {% if titulo %}
+    <title>{{ titulo }} - Cafetería Brioche</title>
+  {% else %}
+    <title>Cafetería Brioche</title>
+  {% endif %}
+
+</head>
+
+<body background ="{{url_for('static', filename = 'Images/pexels-igor-starkov-3.jpg')}}">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <h1 style="color: antiquewhite;">Cafetería Brioche</h1>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01 "
+    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="/profile">Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>-->
+        
+        <!-------Si incia como Mesero o Admin----------------------------------->
+        <li class="nav-item">
+          {%if current_user.is_authenticated%}
+            {%if current_user.admin%}
+              <a class="nav-link" href="/Admin">
+                Home
+              </a>
+            {%else%}
+              <a class="nav-link" href="/user">
+                Home
+              </a>
+            {%endif%}
+          {%else%}
+            <a class="nav-link" href="/">
+              Home
+            </a>
+          {%endif%}
+        </li>
+        <!-------Si incia como Admin----------------------------------->
+        {%if current_user.is_authenticated%}
+          {%if current_user.admin%}
+            <li class="nav-item">
+              <a class="nav-link" href="/nuevaVenta">Facturas registradas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/productos">Lista de productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/usuarios">Lista de usuarios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/mensajes">Mensajes</a>
+            </li>
+          {%else%}
+        <!-----------Si incia como Mesero----------------------------------->
+            <li class="nav-item">
+              <a class="nav-link" href="/nuevaVenta"><center>Cuentas registradas</center></a>
+            </li>
+          {%endif%}
+        <!-----------Si incia como Mesero o Admin----------------------------------->
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('logout')}}"><center>Cerrar sesión</center></a>
+        </li>
+        {%endif%}
+        <!------------------------------------------------------------------->
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/Contactanos">Contáctenos</a>
+        </li>
+        
+        <!--<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" 
+          aria-haspopup="true" aria-expanded="false">Opciones</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/productos">Lista de productos</a>
+            <a class="dropdown-item" href="/usuarios">Lista de meseros</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/">Cerrar Sesión</a>
+          </div>
+        </li>-->
+      </ul>
+    </div>
+  </nav>
+  <hr>
+  {% with mensajes = get_flashed_messages() %}
+      {% if mensajes %}
+      <ul>
+          {% for mensaje in mensajes %}
+          <li>{{ mensaje }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+  {% endwith %}
+  </hr>
+  <!-- contenido cargar-->
+     
+  {% block contenido %}
+  {% endblock %}
+  
+  <footer style="background-color:#0F110C" width="20%">
+      
+  </footer>
+</body>
+</html>

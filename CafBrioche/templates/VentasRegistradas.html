@@ -1,0 +1,36 @@
+{%extends "base.html"%}
+{%block contenido%}
+
+<div id="content-wrap">
+<center>
+<h1><b>Cuentas registradas</b></h1>
+<form action ="" method="post">
+	<br><label id=labelBuscar>Buscar:</label>
+	<input id= "busqueda" type="search"  name="busqueda">
+	<input id="btnBuscar" type="submit" name="buscar" value="Buscar"/>
+
+	<table id="tabel" border="1" class="table table-hover"> 
+		<thead>
+			<tr>
+			  <th scope="col">Id</th>
+			  <th scope="col">Codigo de la cuenta</th>
+			  <th>Cantidad</th>
+			  <th scope="col">Fecha de la cuenta</th>
+			  <th scope="col">Total</th>
+			</tr>
+		  </thead>
+		<tbody>
+			{% for cuenta in cuentas %}
+			<tr>
+			<th scope="row">{% print(cuenta[0]) %}</th> 
+			<td >  {% print(cuenta[1]) %}</td> 
+			<td >  {% print(cuenta[2]) %}</td>  
+			<td>     {% print(cuenta[3]) %}</td>
+			<td></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	</form>
+</div>
+{%endblock%}

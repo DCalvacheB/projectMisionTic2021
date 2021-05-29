@@ -1,0 +1,256 @@
+{%extends "base.html"%}
+{%block contenido%}
+
+<center>
+	<label class='BienvenidoUser'>
+	Bienvenid@, {{usuario_nombre}}
+	</label>
+</center>
+
+<div class="ProdDiv">
+	<center>
+		<h2 class='titulosAdmin'>Productos registrados</h2>
+	</center>
+	<div align="right">
+		<form action="/Cajero/ResultadoBusquedaProd" method="POST">
+			<Input Type="text" name = "entrada" value="" placeholder="Producto ID" onclick="EnableSearchTabProd();"/>
+			<Input Type="submit" class="button" name="Buscar"  value=" Buscar"/>
+		</form>
+	</div>
+	<br>
+	<br>
+	<div align = center id= "resultsTabProd" style="display: none;">
+		<label class="label_1">Resultado de tu búsqueda:</label>
+		<table id = "searchTab" name = "searchTab" class="table table-hover">
+			<thead>
+			<col width = "70">
+				<col width = "70">
+					<col   width = "100">
+						<col  width = "150">
+							<col  width = "150">
+								<tr> 
+									<td width="2"><center>Id</center></td> 
+									<td width="2"><center>Codigo</center></td> 
+									<td width = "5">Nombre</td>
+									<td >Precio de venta($COP)</td> 
+								</tr>
+							</col>
+						</col>
+					</col>
+				</col>
+			</col>
+			</thead>
+			<tbody>
+				{% if resProd is not none%}
+					{% for p in resProd %}
+					<tr>
+						<td >{% print(p[0]) %}</td> 
+						<td><center>{% print(p[1]) %}</center></td>  
+						<td >{% print(p[2])%}</td>
+						<td >{% print(p[3])%}</td>
+					</tr>
+					{% endfor%}
+				{% else %}
+					<tr></tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+	<table class="table table-hover"  class="tablas" id = "tablaProds">
+		<thead>
+		  <tr> 
+			<td width="2">Id</td> 
+			<td width="2">Codigo</td> 
+			<td >Nombre</td>
+			<td >Precio de venta($COP)</td> 
+			<td width="2">Imagen</td>
+  
+		  </tr>
+		</thead> 
+		{% for pro in productos %}
+		<tbody>
+		<tr class="table-row">
+		  <td width="2">{% print(pro.id) %}</td> 
+		  <td width="2">{% print(pro.idProd) %}</td> 
+		  <td width="2">{% print(pro.nombre) %}</td>  
+		  <td width="2">{% print(pro.precio) %}</td>
+		  <td><img alt="{{ pro.nombre }}" src="{{ url_for('obtener_img', prodid=pro.id)}}" /></td>
+		</tr>
+		{% endfor %}
+	  </tbody>
+	</table>
+</div>
+
+<div class="Cuenta">
+	<center>
+		<h2 class='titulosAdmin'>Cuenta</h2><br><br>
+		<button type= "submit" id="newBill" class="button" onclick="activarCuenta();" >Nueva cuenta</button><br><br>
+	</center>
+	<div id ="Factura">
+		<div id="EnableDisableF" style="display: none;">
+			<label class="label_1" >Para agregar un prducto a la factura, haga click en la tabla sobre el producto y después agregar</label>
+			<center>
+			
+			<label class="label_1" >Producto:</label><input class="ROInput" type="text" name="idProd" id="idProd" readonly ><br><br>
+			<label class="label_1">Nombre:</label><input class="ROInput" type="text" name="nombre" id="nombre" readonly ><br><br>
+			<label class="label_1">Precio:</label><input class="ROInput" type="text" name="precio" id="precio" readonly><br><br>
+			<input type="submit" class="button" id="addBtn" onclick = "addRow();" value="Agregar producto a la cuenta">
+							
+			<br><br>
+
+			<table border="1" class="tabCuentas">
+				<col width="150">
+					<col width="150">
+						<col width="150">
+							<tr>
+								<th>ID PROD</th>
+								<th>NOMBRE</th>
+								<th>PRECIO</th>
+							</tr>
+						</col>
+					</col>
+				</col>
+			</table>
+			
+			<br>
+			<button class="button" id="fin" name="Agregar" onclick="getBill();" >Finalizar servicio</button>
+			<button class = "button" onclick="document.getElementById('idProd').value = '',
+			document.getElementById('precio').value = '', document.getElementById('nombre').value = ''">Limpiar</button><br><br>
+
+			<form action="/editCuenta" method="POST">
+				<h2 style="color: burlywood;">Total</h2>
+				<input type="hidden" name="total" id="total"><br>
+				<input type="text" name="totalCuenta" id="totalCuenta" class = "ROInput" readonly style="background: dodgerblue; font-size: 30px;"><br>
+				<input type="hidden" name="prodsBill" id="prodsBill" class = "ROInput" readonly>
+				<input type="hidden" name="prodsIds" id="prodsIds" class = "ROInput" readonly>
+				<input class="ROInput" type="hidden" name="idempleado" id="idempleado" value= "{{idEmp}}" readonly ><br><br>
+				<br><br><input type="submit" value="Cerrar cuenta" class="button">
+			</form>
+			
+			</center>
+		</div>
+	</div>	
+</div>
+</form>
+<script>
+// type="text/javascript">
+	var nodes = document.getElementById("Factura").getElementsByTagName('*');
+	var mydiv2 = document.getElementById("EnableDisableF");
+	for(var i = 0; i < nodes.length; i++){
+		nodes[i].disabled = true;
+	}
+	function activarCuenta(){
+		//document.getElementById("idempleado").value = ;
+		var nodes = document.getElementById("Factura").getElementsByTagName('*');
+		for(var i = 0; i < nodes.length; i++){
+			nodes[i].disabled = false;
+		}
+		if (mydiv2.style.display === "none"){
+			mydiv2.style.display = "block";
+		}	
+	}
+
+
+	var table = document.getElementById('tablaProds');
+    
+    for(var i = 1; i < table.rows.length; i++)
+    {
+        table.rows[i].onclick = function()
+        {
+                //rIndex = this.rowIndex;
+                document.getElementById("idProd").value = this.cells[1].innerHTML;
+				document.getElementById("nombre").value = this.cells[2].innerHTML;
+				document.getElementById("precio").value = this.cells[3].innerHTML;
+				
+        };
+    }
+	function addRow(){
+		//var prod = '{{prod}}'
+		var prod = document.getElementById('idProd').value;
+		var precio = document.getElementById('precio').value;
+		var nombre = document.getElementById('nombre').value;
+		if (!prod== ""){
+			var table = document.getElementsByClassName('tabCuentas')[0]
+			var newRow = table.insertRow(-1);
+
+			var cell = newRow.insertCell(0);
+			var cell2 = newRow.insertCell(1);
+			var cell4 = newRow.insertCell(2);
+			var cell5 = newRow.insertCell(3);
+			cell.innerHTML = prod;
+			cell2.innerHTML = nombre;
+			cell4.innerHTML = precio;
+
+			cell5.innerHTML = '<input type="button" value="Borrar" onclick="deleteRow()">'
+		}
+
+		
+	}
+	function deleteRow(){
+		var table = document.getElementsByClassName('tabCuentas')[0]
+		for(var i = 1; i < table.rows.length; i++)
+    	{
+			table.rows[i].onclick = function()
+			{
+					rIndex = this.rowIndex;
+					console.log(rIndex);
+					table.deleteRow(rIndex);
+					
+			};
+		}
+    }
+	var mydiv5 = document.getElementById("resultsTabProd");
+	function EnableSearchTabProd(){
+		if (mydiv5.style.display === "none"){
+			mydiv5.style.display = "block";
+		}
+		
+	}
+	function getBill(){
+		var tableProdsBill = document.getElementsByClassName('tabCuentas')[0]
+		console.log(tableProdsBill.rows[0].cells[0].innerHTML)
+		var sum=0
+		var lista=''
+		var listaids=''
+		for(var i = 1; i < tableProdsBill.rows.length; i++){
+			sum += parseInt(tableProdsBill.rows[i].cells[2].innerHTML)
+			console.log('Total:'+sum)
+			document.getElementById("total").value = sum;
+			lista += tableProdsBill.rows[i].cells[1].innerHTML
+			if (i<=tableProdsBill.rows.length){
+				lista += ','
+			}
+			document.getElementById("prodsBill").value = lista;
+			console.log(lista)
+			listaids+=tableProdsBill.rows[i].cells[0].innerHTML
+			if (i<=tableProdsBill.rows.length){
+				listaids += ','
+			}
+			document.getElementById("prodsIds").value = listaids;
+			var total = sum;
+			var pesos = formatMoney(total);
+			document.getElementById("totalCuenta").value = "$  "+ pesos;
+		}
+		
+		function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+			try {
+				decimalCount = Math.abs(decimalCount);
+				decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+				const negativeSign = amount < 0 ? "-" : "";
+
+				let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+				let j = (i.length > 3) ? i.length % 3 : 0;
+
+				return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+			} catch (e) {
+				console.log(e)
+			}
+		}
+		
+	}
+	
+	
+	
+</script>
+{% endblock %}

@@ -1,0 +1,348 @@
+{% extends "base.html" %}
+{% block contenido %}
+<center>
+<label class='BienvenidoAdmin'>
+Bienvenid@, {{usuario_nombre}}
+</label>
+</center>
+<center>	
+
+<div class="conTab">
+	<center>
+		<h2 class='titulosAdmin' align="left">  Usuarios registrados</h2><br>
+		<div align=left>
+			<Input Type="button" class="button" name="RegistrarUsu" value=" Registrar usuario nuevo" onclick="location.href='/login/UsuarioNuevo'">
+		</div>
+		
+		<div align="right">
+			<form action="/Admin/ResultadoBusqueda" method="POST">
+				<Input Type="text" name = "entrada" value="" placeholder="Empleado ID" onclick="EnableSearchTab();"/>
+				<Input Type="submit" class="button" name="Buscar"  value=" Buscar"/>
+			</form>
+		</div>
+	</center>
+	
+	<div align = left><button class= "button" id="newBill" onclick="activarUserEdit();">Editar</button><br><br></div>
+	<div id="editUser" align = left>
+		<div id = "EnableDisableForm" style="display: none;">
+			<a style="color: aliceblue;">Haga click en la tabla sobre el empleado que desee modificar</a>
+			<form action="/edit" method="POST">
+				<label class="label_1">Id Empleado:</label><input class="ROInput" type="text" name="idtrabajo" id="idtrabajo" readonly><br><br>
+				<label class="label_1">Nombre:</label><input type="text" name="nombreU" id="nombreU"><br><br>
+				<label class="label_1">Correo:</label><input type="email" name="correoU" id="correoU">
+				<input type = "checkbox" style="margin-left: 10%" name="borrarUser" id="borrarUser" value = "1"><label class="label_1">Borrar</label>
+				<input type="submit" style="margin-left: 10%" value="Guardar cambios" class = "button"><br><br>
+			</form>
+		</div>
+		<div align = center id= "resultsTab" style="display: none;">
+			<label class="label_1">Resultado de tu búsqueda:</label>
+			<table id = "searchTab" name = "searchTab">
+				<thead>
+					<th scope="col">N°</th>
+					<th scope="col">Empleado ID</th>
+					<th scope="col"><center>Nombre</center></th>
+					<th scope="col"><center>Correo</center></th>
+					<th scope="col"><center>Tipo de usuario</center></th>
+				</thead>
+				<tbody>
+					{% if res is not none%}
+						{% for r in res %}
+						<tr>
+							<td >{% print(r[0]) %}</td> 
+							<td><center>{% print(r[1]) %}</center></td>  
+							<td >{% print(r[2])%}</td>
+							<td width="2" >{% print(r[3])%}</td>
+							<td>
+								<center>
+								{%if r[5] == 0%}
+									Mesero
+								{%else%}
+									Admin
+								{%endif%}
+								</center>
+							</td>
+						</tr>
+						{% endfor%}
+					{% else %}
+						<tr></tr>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+		<br><br>
+		<form method = 'POST' action="#"> 
+			<table class="table table-hover" name ="UserTab" id="UserTab">
+				<thead>
+				<col width="20">
+					<col width="20">
+						<col width="20">
+							<col width="50">
+								<col width="30">
+									<col width="5">
+										<tr>
+										<th scope="col">N°</th>
+										<th scope="col">ID de Empleado</th>
+										<th scope="col"><center>Nombre</center></th>
+										<th scope="col"><center>Correo</center></th>
+										<th scope="col"><center>Tipo de usuario</center></th>
+									</tr>
+								</col>
+							</col>
+						</col>
+					</col>
+				</col>
+				</thead>
+				<tbody>
+				{% for usu in usuarios %}
+				<tr  class="table-row">
+				<td width="1" >{% print(usu[0]) %}</td> 
+				<td width="1"  >{% print(usu[1]) %}</td>
+				<td width="2">{% print(usu[2])%}</td>  
+				<td width="2">{% print(usu[3])%}</td>
+				<td width="2" >
+					{%if usu[5] == 0%}
+						Mesero
+					{%else%}
+						Administrador
+					{%endif%}
+				</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+			
+			</table>
+			
+		</form>
+		
+	</div>
+</div>
+
+
+
+<div class="tabRec">
+	<center>
+		<h2 class='titulosAdmin' align="left">Productos registrados</h2>
+	</center>
+	<div align="left">
+		<br><Input Type="button" class="button" name="RegistrarProd" value=" Registrar producto nuevo" onclick="location.href='/login/ProductoNuevo'"><br>
+	</div>
+	<div align="right">
+		<form action="/Admin/ResultadoBusquedaProd" method="POST">
+			<Input Type="text" name = "entrada" value="" placeholder="Producto ID" onclick="EnableSearchTabProd();"/>
+			<Input Type="submit" class="button" name="Buscar"  value=" Buscar"/>
+		</form>
+	</div>
+	<br>
+	<div align = left><button class= "button" id="newBill" onclick="activarProdEdit();">Editar</button></div>
+	<div id="editProd">		
+		<div id = "EnableDisableProd" style="display: none;">
+			<a style="color: aliceblue;">Haga click en la tabla sobre el producto que desee modificar</a>
+			<form action="/editProd" method="POST">
+				<div align = "left">
+					<label class="label_1">Id del producto:</label><input class="ROInput" type="text" name="idProd" id="idProd" readonly><br>
+					<label class="label_1">Nombre del producto:</label><input type="text" name="nombreProd" id="nombreProd"><br>
+					<label class="label_1">Cantidad en inventario:</label><input type="number" name="cantProd" id="cantProd">
+					<input class="ROInput" type="hidden" name="cantProdV" id="cantProdV" readonly><br>
+					<label class="label_1">Precio del producto:</label><input type="number" name="precioProd" id="precioProd">
+					<input class="ROInput" type="hidden" name="precioProdV" id="precioProdV" readonly><br>					
+					<!--<label class="label_1" style="margin-left: 10%" for="Name">Imagen</label><input type="file" name="inputFile"><br><br>-->
+					<input type = "checkbox" style="margin-left: 10%" name="borrarProd" id="borrarProd" value = "1"><label class="label_1">Borrar producto</label>
+					<input type="submit" style="margin-left: 10%" value="Guardar cambios" class = "button"><br><br>
+				</div>
+			</form>
+			<div align = left>
+			<button class= "button" id="newBill" onclick="activarImgEdit();">Cambiar img</button><br><br>
+				<form action="/editImg" method = "POST" enctype="multipart/form-data">
+					<div id = "EnableDisableImg" style="display: none;">
+						<input class="ROInput" type="hidden" name="idProdImg" id="idProdImg" readonly><br>
+						<label for="Name">Imagen</label><br>
+						<input type="file"  id = "newImgEdit" name="newImgEdit">
+						<input type="submit" value="Nueva Imagen" class = "button"><br><br>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div align = center id= "resultsTabProd" style="display: none;">
+			<label class="label_1">Resultado de tu búsqueda:</label>
+			<table id = "searchTab" name = "searchTab" class="table table-hover">
+				<thead>
+				<col width = "70">
+					<col width = "70">
+						<col   width = "100">
+							<col  width = "150">
+								<col  width = "150">
+									<tr> 
+										<td width="2"><center>Id</center></td> 
+										<td width="2"><center>Codigo</center></td> 
+										<td width = "5">Nombre</td>
+										<td >Precio de venta($COP)</td> 
+										<td width="2">Cantidad en Inventario</td>
+									</tr>
+								</col>
+							</col>
+						</col>
+					</col>
+				</col>
+				</thead>
+				<tbody>
+					{% if resProd is not none%}
+						{% for p in resProd %}
+						<tr>
+							<td >{% print(p[0]) %}</td> 
+							<td><center>{% print(p[1]) %}</center></td>  
+							<td >{% print(p[2])%}</td>
+							<td>{% print(p[3])%}</td>
+							<td>{% print(p[4])%}</td>
+						</tr>
+						{% endfor%}
+					{% else %}
+						<tr></tr>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+		<br><br>
+		<table class="table table-hover" name ="ProdTab" id="ProdTab">
+			<thead>
+			<col>
+				<col>
+					<col>
+						<col>
+							<col>
+								<tr> 
+									<td><center>Id</center></td> 
+									<td><center>Codigo</center></td> 
+									<td>Nombre</td>
+									<td >Precio de venta($COP)</td> 
+									<td >Cantidad en Inventario</td>
+									<td width="2">Imagen</td>
+								</tr>
+							</col>
+						</col>
+					</col>
+				</col>
+			</col>
+			</thead> 
+			{% for pro in productos %}
+			<tbody>
+			<tr class="table-row">
+				<td width="2">{% print(pro.id) %}</td> 
+				<td width="2">{% print(pro.idProd) %}</td> 
+				<td width="2">{% print(pro.nombre) %}</td>  
+				<td width="2">{% print(pro.precio) %}</td>
+				<!--<td width="2">{% print(pro[4]) %}</td>-->
+				<td width="2">{% print(pro.cantidad) %}</td>
+				<td><img alt="{{ pro.nombre }}" src="{{ url_for('obtener_img', prodid=pro.id)}}" /></td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+			
+	</div>
+</div>
+
+</center>
+<script>
+
+	var table = document.getElementById('UserTab');
+    for(var i = 1; i < table.rows.length; i++)
+    {
+        table.rows[i].onclick = function()
+        {
+				//rIndex = this.rowIndex;			
+				document.getElementById("idtrabajo").value = this.cells[1].innerHTML;
+                document.getElementById("nombreU").value = this.cells[2].innerHTML;
+				document.getElementById("correoU").value = this.cells[3].innerHTML;
+		};
+	}
+	var nodes = document.getElementById("editUser").getElementsByTagName('*');
+	var mydiv = document.getElementById("EnableDisableForm");
+	for(var i = 0; i < nodes.length; i++){
+		nodes[i].disabled = true;
+	}
+	function activarUserEdit(){
+		if (mydiv.style.display === "none") {
+			mydiv.style.display = "block";
+		} else {
+			mydiv.style.display = "none";
+		}
+		var nodes = document.getElementById("editUser").getElementsByTagName('*');
+		for(var i = 0; i < nodes.length; i++){
+			nodes[i].disabled = false;
+		}
+		
+	}
+	//-----------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------
+	var tableProd = document.getElementById('ProdTab');
+    for(var i = 1; i < tableProd.rows.length; i++)
+    {
+        tableProd.rows[i].onclick = function()
+        {
+				//rIndex = this.rowIndex;
+				document.getElementById("idProd").value = this.cells[1].innerHTML;
+				document.getElementById("idProdImg").value = this.cells[1].innerHTML;
+				document.getElementById("nombreProd").value = this.cells[2].innerHTML;
+				document.getElementById("precioProd").value = this.cells[3].innerHTML;
+				document.getElementById("precioProdV").value = this.cells[3].innerHTML;
+				document.getElementById("cantProd").value = this.cells[4].innerHTML;
+				document.getElementById("cantProdV").value = this.cells[4].innerHTML;
+				
+		};
+	}
+	var nodes2 = document.getElementById("editProd").getElementsByTagName('*');
+	var mydiv2 = document.getElementById("EnableDisableProd");
+	for(var i = 0; i < nodes2.length; i++){
+		nodes2[i].disabled = true;
+	}
+	function activarProdEdit(){
+		if (mydiv2.style.display === "none") {
+			mydiv2.style.display = "block";
+		} else {
+			mydiv2.style.display = "none";
+		}
+		var nodes2 = document.getElementById("editProd").getElementsByTagName('*');
+		for(var i = 0; i < nodes2.length; i++){
+			nodes2[i].disabled = false;
+		}
+		
+	}
+
+	
+	var nodes3 = document.getElementById("newImgEdit");
+	var mydiv3 = document.getElementById("EnableDisableImg");
+	for(var i = 0; i < nodes3.length; i++){
+		nodes3[i].disabled = true;
+	}
+	function activarImgEdit(){
+		if (mydiv3.style.display === "none") {
+			mydiv3.style.display = "block";
+		} else {
+			mydiv3.style.display = "none";
+		}
+		var nodes3 = document.getElementById("newImgEdit").getElementsByTagName('*');
+		for(var i = 0; i < nodes3.length; i++){
+			nodes3[i].disabled = false;
+		}
+		
+	}
+	//--------------------------------------------------------------------------------
+	var mydiv4 = document.getElementById("resultsTab");
+	function EnableSearchTab(){
+		if (mydiv4.style.display === "none"){
+			mydiv4.style.display = "block";
+		}
+	}
+	var mydiv5 = document.getElementById("resultsTabProd");
+	function EnableSearchTabProd(){
+		if (mydiv5.style.display === "none"){
+			mydiv5.style.display = "block";
+		}
+	}
+
+
+
+</script>
+
+{% endblock %}

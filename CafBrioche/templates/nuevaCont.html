@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block contenido %}
+
+<div id="content-wrap">
+	<center>
+		<h1> <b>{{user}}, recupera tu contraseña</b></h1>
+		<form  action = "{{ url_for('recuperar_cont', token=token) }}" method="GET">
+			<div id = "texto">
+			<label>A continuación ingrese la nueva contraseña y posteriormente
+				vuelva a escribirla. Recuerde que debe tener mínimo 8 caracteres y
+				para mayor seguridad incluya letras, números y signos.</label>
+			</div>
+			
+			<label>Contraseña</label><br>
+			<Input Type="password" name="contA" id = "contA" /><br>
+			<label>Confirme contraseña</label><br>
+			<Input Type="password" name="contB" id = "contB" /><br><br><br>
+			<Input Type="submit" class="button" name="Entrar" value="Guardar cambios" ><br>
+				
+		</form>
+	</center>
+</div>
+{% endblock%}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="algo">
+    <h1><b>Lista de mensajes guardados</b></h1>
+    <table class="table table-hover"  class="tablas">
+        <thead>
+        <tr> 
+            <td width="2">Id</td> 
+            <td width="2">DE:</td> 
+            <td >ASUNTO:</td>
+            <td >MENSAJE:</td>
+
+        </tr>
+        </thead> 
+        <tbody>
+        {% for msjs in mensajes %}
+            <tr>
+                <td width="2">{% print(msjs.id) %}</td> 
+                <td width="2">{% print(msjs.de) %}</td> 
+                <td width="2">{% print(msjs.asunto) %}</td>  
+                <td width="2">{% print(msjs.mensaje) %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock%}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="algo">
+    <center>
+    <h1><b>Recuperar contraseña</b></h1><br>
+    <label>Ingresa el correo electrónico asociado a la cuenta que quieres recuperar</label>
+    </center>
+    <form action ="/Confirmacion" method="post">
+      <br><label id=labelCorreo>Correo:</label>
+      <input id= "emailimp" type="email"  name="correo">
+      <br><br><input id="button" class="button" type="submit" name="button" value="Enviar"/>
+      <br><br><br><br><input id="button2" class="button" type="reset" name="cancelar" value="Cancelar"/>
+      <input id="button2" type="button" class="button" name="volver" value="Volver" onclick="location.href='/'"/>
+    </form>
+
+</div>
+{% endblock%}

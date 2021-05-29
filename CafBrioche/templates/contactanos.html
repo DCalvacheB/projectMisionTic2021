@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class='algo'>
+    <center>
+        <h2><b>Gracias por tu interés en Brioche</b></h2>
+
+        <h3>Nos gustaría escucharte</h3>
+
+        <form action="/enviarMsg" method = 'POST'>
+            <label>DE:</label>
+            <p>{{form.correode}}</p>
+            <label>ASUNTO:</label>
+            <p>{{form.asunto}}</p>
+            <label>MENSAJE</label>
+            
+            <p>{{form.mensaje}}</p>
+            <Input Type="submit" class="button" name="Agregar" value="Enviar" ><br>
+        </form>
+        
+        
+    </center>
+</div>
+
+{%endblock%}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div id="content-wrap">
+    <center>
+    <form action="/AddUsuarioNuevo" name="formNuevoUsu" method="POST">
+        <h1><b> Registrar un nuevo usuario </b></h1>
+        <p>{{form.hidden_tag()}}</p>
+        ID de Empleado<p>{{form.idtrabajo}}</p>
+        Nombre<p>{{form.nombre}}</p>
+        Email<p>{{form.email}}</p>
+        Contraseña nueva<p>{{form.contraseña}}</p>
+        <p>{{form.admin}}Administrador<br></p>
+        
+        <Input Type="submit" class="button" name="Agregar" value="Agregar nuevo usuario" >
+        <input id="button2"class="button" type="reset" name="cancelar" value="Cancelar"/>
+            
+    </form>
+    </center>
+</div>
+{% endblock %}

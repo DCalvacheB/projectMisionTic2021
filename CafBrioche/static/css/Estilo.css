@@ -1,0 +1,20 @@
+.algo{background-color: wheat;width: 50%;margin: auto;border-radius: 5%;padding: 4px 4px 4px 4px;}
+.algomas{background-color: wheat;width: 80%;margin: auto;border-radius: 5%;padding: 4px 4px 4px 4px;}
+body {margin: 0px;background-position: center;}
+#emailimp, #pswdimp{ width: 100%; }
+.conTab{border-radius: 0.75rem;background: #0F110C;margin:10px;width:40%;float:left;padding: 4px 4px 4px 4px;}
+.tabRec{border-radius: 0.75rem;background: #0F110C;width:57%;float: right;margin: 10px;padding: 4px 4px 4px 4px;}
+.button{border-radius: 0.75rem;background-color: #d3d0cb;color: black;transition: background-color 0.15s ease-in-out, top 0.15s ease-in-out,left 0.15s ease-in-out;}
+.Cuenta{border-radius: 0.75rem;margin:10px;width:40%;float:right;background: #0F110C;}
+.ProdDiv{border-radius: 0.75rem; background: #0F110C;margin:10px;width:57%;float: left;}
+.titulosAdmin{color: burlywood;}
+.BienvenidoAdmin{background-color: #612940;color: white;font-size: 20px;width: 80%;}
+.BienvenidoUser{background-color: #44bba4;color: white;font-size: 20px;width: 80%;}
+#content-wrap{background-color:wheat;width: 80%;border-radius: 10px;margin: auto;padding-right: 10px;padding: 20px 20px 10px;}
+.tablas .ProdTab .UserTab .table-hover{table-layout: fixed;}
+#tabCuenta{table-layout: fixed;}
+.mensaje{width: 20px;height: 20px;}
+#texto{width: 50%;}
+.table-row{cursor:pointer;}
+.label_1{color: white;font-size: 18px;}
+.ROInput{background-color: rgb(185, 179, 179);}

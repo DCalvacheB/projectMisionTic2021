@@ -1,0 +1,40 @@
+{%extends "base.html"%}
+{%block contenido%}
+
+<div class="algo">
+	<center>
+    <h2><b>Cuenta</b></h2>
+        <div align=right>
+        </div>
+        
+        <br>
+        <br>
+        <table class="table table-hover">
+            <thead>
+            <tr> 
+                <td>N° de la factura</td>
+                <td>Fecha</td>
+                <td>Productos</td>
+                <td width = "3">Total</td> 
+                <td>ID Empleado </td>
+            </tr>
+            </thead> 
+            {% for c in cuentas %}
+            <tbody>
+            <td>{% print(c[0]) %}</td> 
+            <td>{% print(c[4]) %}</td> 
+            <td>{% print(c[2]) %}</td>  
+            <td>${% print(c[3]) %}</td>
+            <td>{% print(c[5])%}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+		<br>
+		<br>
+	
+	</center>
+	
+</div>
+</script>
+{% endblock %}

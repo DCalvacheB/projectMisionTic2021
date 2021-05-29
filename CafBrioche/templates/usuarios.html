@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div id="content-wrap">
+  <center>
+  <h1><b>Lista de usuarios registrados</b></h1>
+  
+    <table id="tabel" border="1"> 
+      <table id="tabel" border="1" class="table table-hover"> 
+        <thead>
+          <tr>
+            <th scope="col">N°</th>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Tipo de usuario</th>
+          </tr>
+          </thead>
+      <tbody>
+        {% for usu in usuarios %}
+        <tr>
+          <td>{% print(usu[0]) %}</td> 
+          <td>{% print(usu[1]) %}</td> 
+          <td>{% print(usu[2]) %}</td>  
+          <td>{% print(usu[3]) %}</td>
+          <td>
+            {%if usu[5] == 0%}
+              Cajero
+            {%else%}
+              Administrador
+            {%endif%}
+          </td>
+          
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </center>
+</div>
+{%endblock%}
+

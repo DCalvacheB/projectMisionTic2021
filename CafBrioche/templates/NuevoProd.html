@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block contenido %}
+
+<div id="content-wrap">
+    <center>
+    <form method="POST" action="/AddProdNuevo" enctype="multipart/form-data">
+        <h1><b> Registrar un nuevo producto</b> </h1>
+
+        <div>Por favor ingresa la información requerida del nuevo producto.</div>
+        <div>
+            <label for="Name">ID</label><br>
+            <Input Type="number" name="idProd" /><br>
+        </div>
+        <div>
+            <label for="Name">Nombre</label><br>
+            <Input Type="name" name="nombre" /><br>
+        </div>
+        <div>
+            <label for="Name">Cantidad</label><br>
+            <Input Type="number" name="cantidad" /><br>
+        </div>
+        <div>
+            <label for="Name">Precio</label><br>
+            <Input Type="number" name="precio" /><br>
+        </div>
+        <div>
+            <label for="Name">Imagen</label><br>
+            <input type="file" name="inputFile"><br><br>
+        </div>
+        <!--<Input name="inputFile" type="file"><br><br>-->
+        <Input Type="submit" class="button" name="Agregar" value="Aceptar" >
+        <input id="button2"class="button" type="reset" name="cancelar" value="Cancelar"/>
+    </Form>
+    </center>
+</div>
+{%endblock%}

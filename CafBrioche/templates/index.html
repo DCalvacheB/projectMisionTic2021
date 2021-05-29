@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class='algo'>
+    <center>
+    <br>
+    <h1><b>Cafetería Brioche</b></h1>
+    <p id="floating-title">Estamos felices de tenerte de nuevo con nosotros</p>
+
+    <form method="POST" action="/login">
+            
+            <p>{{ form.hidden_tag()}}</p>
+            Empleado ID<br>
+            {{ form.idtrabajo}}<br><br>
+            Contraseña<br>
+            {{ form.contraseña}}<br>
+            <a class="ma-link" href="/RecuperarCont">¿olvidaste tu contraseña?</a><br><br>
+            {{ form.recordar }}Recordar usuario
+
+            <br><br><input type="submit" class="button" value="Iniciar sesión">
+            <input id="button2" class="button" type="reset" name="cancelar" value="Cancelar"/>
+            
+        </dl>
+        <!--<input type="reset" value="REFRESH">-->
+        
+    </form>
+    </center>
+</div>
+
+
+{% endblock %}
