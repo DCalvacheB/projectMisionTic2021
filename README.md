@@ -8,8 +8,8 @@ Cuenta con:
 - Menú e inventario de la cafetería, con funciones para administración de productos
 
 
-![image info](./CafBrioche/results/CafeteriaBrioche1.png)
+![Admin view](/CafBrioche/results/CafeteriaBrioche1.png)
 
 
-![image info](./CafBrioche/results/CafeteriaBriocheWebApp.mp4)
+
 
