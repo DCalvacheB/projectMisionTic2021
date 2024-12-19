@@ -3,10 +3,10 @@ Project of the third module of ICT Mission 2022, involved the preparation, desig
 
 It has:
 
-Login Authentication
-Receiving PQRS via email
-Managing Administrator and Waiter Accounts
-Cafeteria menu and inventory, with product management features
+- Login Authentication
+- Receiving PQRS via email
+- Managing Administrator and Waiter Accounts
+- Cafeteria menu and inventory, with product management features
 
 
 ![Admin view](CafBrioche/results/CafeteriaBrioche1.PNG)
